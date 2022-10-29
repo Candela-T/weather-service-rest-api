@@ -25,13 +25,7 @@ public class WeatherDataService {
 
     public List<WeatherDataDTO> getAllWeatherData(){
 
-       List<WeatherData> listWeatherData = weatherDataRepository.findAll();
-
-       List<WeatherDataDTO> dtos = new ArrayList<>();
-
-       listWeatherData.forEach(weatherData -> dtos.add(mapWeatherDataToDTO(weatherData)));
-
-       return dtos;
+       return mapWeatherDataInWeatherDataDTO(weatherDataRepository.findAll());
     }
 
     public ResponseEntity<Object> getWeatherDataDtoById(int id) {
@@ -45,7 +39,6 @@ public class WeatherDataService {
     }
 
     public ResponseEntity<Object> getWeatherDataByDate(String date){
-
         LocalDateTime localDateTime;
 
         try {
@@ -58,12 +51,16 @@ public class WeatherDataService {
         }
         List<WeatherData> listWeatherData = weatherDataRepository.findByWeatherDate(localDateTime);
 
+        return new ResponseEntity<>(mapWeatherDataInWeatherDataDTO(listWeatherData), HttpStatus.OK);
+
+    }
+
+
+    private List<WeatherDataDTO> mapWeatherDataInWeatherDataDTO(List<WeatherData> listWeatherData){
         List<WeatherDataDTO> dtos = new ArrayList<>();
 
         listWeatherData.forEach(weatherData -> dtos.add(mapWeatherDataToDTO(weatherData)));
-
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
-
+        return dtos;
     }
 
     private LocalDateTime convertToLocaldateTime(String date) throws DateTimeParseException{
