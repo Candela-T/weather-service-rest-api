@@ -55,6 +55,10 @@ public class WeatherDataService {
 
     }
 
+    public ResponseEntity<Object> saveWeatherData(WeatherData weatherData){
+        weatherDataRepository.save(weatherData);
+        return new ResponseEntity<>("Has been created successfully", HttpStatus.CREATED);
+    }
 
     private List<WeatherDataDTO> mapWeatherDataInWeatherDataDTO(List<WeatherData> listWeatherData){
         List<WeatherDataDTO> dtos = new ArrayList<>();

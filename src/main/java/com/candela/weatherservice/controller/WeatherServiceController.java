@@ -1,5 +1,6 @@
 package com.candela.weatherservice.controller;
 
+import com.candela.weatherservice.model.WeatherData;
 import com.candela.weatherservice.service.WeatherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,12 @@ public class WeatherServiceController {
     public ResponseEntity<Object> getWeatherDataDto(@PathVariable("id") int id){
          return weatherDataService.getWeatherDataDtoById(id);
     }
+
+
+    @PostMapping("/weather")
+    public ResponseEntity<Object> saveWeatherData(@RequestBody WeatherData weatherData) {
+        return weatherDataService.saveWeatherData(weatherData);
+    }
+
 
 }
